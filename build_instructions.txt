@@ -1,0 +1,111 @@
+GoldVault Ledger - Build Instructions
+=====================================
+
+PREREQUISITES:
+--------------
+1. Python 3.10 or higher installed on Windows
+2. pip package manager
+3. USB drive for deployment
+
+BUILD STEPS:
+------------
+
+1. Install Dependencies
+   Open Command Prompt in the GoldVault folder and run:
+   
+   pip install -r requirements.txt
+
+2. Build the Executable
+   Run the following PyInstaller command:
+   
+   pyinstaller --noconfirm --onefile --windowed ^
+     --add-data "frontend;frontend" ^
+     --hidden-import=eel ^
+     --hidden-import=cryptography ^
+     --hidden-import=sqlite3 ^
+     --hidden-import=win32file ^
+     --hidden-import=win32api ^
+     --hidden-import=pywintypes ^
+     --icon=NONE ^
+     --name GoldVault ^
+     main.py
+
+   Note: The ^ character is for line continuation in Windows Command Prompt.
+   If using PowerShell, replace ^ with `
+
+3. Locate the Executable
+   After successful build, find GoldVault.exe in the dist/ folder
+
+4. Deploy to USB Drive
+   a. Copy GoldVault.exe to the root of your USB drive
+   b. Create an empty folder named "GoldVaultData" next to the .exe
+   
+   Your USB structure should look like:
+   E:\
+   ├── GoldVault.exe
+   └── GoldVaultData\
+
+5. First Run
+   - Double-click GoldVault.exe
+   - Complete the first-time setup wizard
+   - Create your master password (IMPORTANT: Do not forget this!)
+   - Create your admin account
+
+TROUBLESHOOTING:
+----------------
+
+Issue: "Module not found" errors during build
+Solution: Ensure all dependencies are installed: pip install -r requirements.txt
+
+Issue: Application won't start
+Solution: Check GoldVaultData/goldvault.log for error messages
+
+Issue: "Frontend folder not found"
+Solution: Ensure the frontend folder is in the same directory as main.py before building
+
+Issue: USB auto-lock not working
+Solution: Ensure pywin32 is properly installed: pip install --upgrade pywin32
+
+TESTING:
+--------
+
+Before deploying to production:
+1. Run the calculation tests:
+   python backend/calculations.py
+
+2. Test the application on your development machine:
+   python main.py
+
+3. Test the built executable on a clean Windows machine
+
+SECURITY NOTES:
+---------------
+
+1. The master password encrypts the entire database with AES-256-GCM
+2. User passwords are hashed with PBKDF2 (600,000 iterations)
+3. The database exists only in memory while the app runs
+4. Always keep backups of your encrypted database file
+5. Store the master password securely - it cannot be recovered if lost
+
+BACKUP RECOMMENDATIONS:
+-----------------------
+
+1. Regular backups are created automatically before data clearing operations
+2. Manual backups can be created from the Admin Panel
+3. Store backups in multiple secure locations
+4. Test backup restoration periodically
+
+SYSTEM REQUIREMENTS:
+--------------------
+
+- Windows 10 or Windows 11
+- 4 GB RAM minimum
+- 100 MB free disk space on USB drive
+- No internet connection required
+- No administrator rights required
+
+SUPPORT:
+--------
+
+For issues or questions, check the log file at:
+GoldVaultData/goldvault.log

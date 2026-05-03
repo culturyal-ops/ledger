@@ -1,0 +1,4 @@
+eel>=0.16.0
+cryptography>=41.0.0
+pywin32>=306
+pyinstaller>=6.0.0

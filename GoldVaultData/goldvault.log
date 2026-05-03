@@ -1,0 +1,9 @@
+2026-05-04 00:13:11,147 [INFO] goldvault.main: GoldVault Ledger starting. APP_DIR=/Users/abdulsalam/gold ledger/GoldVault
+2026-05-04 00:13:11,147 [INFO] goldvault.main: DATA_FOLDER=/Users/abdulsalam/gold ledger/GoldVault/GoldVaultData
+2026-05-04 00:13:11,224 [INFO] goldvault.main: USB polling disabled on macOS (development mode)
+2026-05-04 00:13:11,224 [INFO] goldvault.main: Starting Eel application...
+2026-05-04 00:13:12,063 [INFO] geventwebsocket.handler: 127.0.0.1 - - [2026-05-04 00:13:12] "GET /index.html HTTP/1.1" 200 16104 0.009423
+2026-05-04 00:13:12,288 [INFO] geventwebsocket.handler: 127.0.0.1 - - [2026-05-04 00:13:12] "GET /style.css HTTP/1.1" 200 22066 0.007327
+2026-05-04 00:13:12,291 [INFO] geventwebsocket.handler: 127.0.0.1 - - [2026-05-04 00:13:12] "GET /eel.js HTTP/1.1" 200 6668 0.000737
+2026-05-04 00:13:12,316 [INFO] geventwebsocket.handler: 127.0.0.1 - - [2026-05-04 00:13:12] "GET /script.js HTTP/1.1" 200 28302 0.007715
+2026-05-04 00:13:13,274 [INFO] geventwebsocket.handler: 127.0.0.1 - - [2026-05-04 00:13:13] "GET /favicon.ico HTTP/1.1" 404 883 0.007390

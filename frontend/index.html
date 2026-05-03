@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoldVault Ledger</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+  <div id="app-container">
+    
+    <!-- Boot Screen -->
+    <div id="boot-screen" class="screen active">
+      <div class="boot-logo">🏆 GoldVault</div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <p style="margin-top: 16px; color: #666;">Loading...</p>
+    </div>
+
+    <!-- Setup Screen (First Run) -->
+    <div id="setup-screen" class="screen auth-screen">
+      <div class="auth-card">
+        <h1>🏆 First Time Setup</h1>
+        <p>Create your secure vault</p>
+        <div id="setup-error" class="alert alert-error hidden"></div>
+        <form id="setup-form">
+          <div class="form-group">
+            <label>Master Password *</label>
+            <input type="password" id="setup-master-pw" required minlength="4">
+            <small>This encrypts your entire database. Do not forget it!</small>
+          </div>
+          <div class="form-group">
+            <label>Confirm Master Password *</label>
+            <input type="password" id="setup-master-pw-confirm" required>
+          </div>
+          <div class="form-group">
+            <label>Admin Username *</label>
+            <input type="text" id="setup-admin-user" required minlength="3">
+          </div>
+          <div class="form-group">
+            <label>Admin Password *</label>
+            <input type="password" id="setup-admin-pw" required minlength="4">
+          </div>
+          <div class="form-group">
+            <label>Confirm Admin Password *</label>
+            <input type="password" id="setup-admin-pw-confirm" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Create Vault</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Master Password Screen -->
+    <div id="unlock-screen" class="screen auth-screen">
+      <div class="auth-card">
+        <h1>🔒 Unlock Vault</h1>
+        <p>Enter your master password</p>
+        <div id="unlock-error" class="alert alert-error hidden"></div>
+        <form id="unlock-form">
+          <div class="form-group">
+            <label>Master Password</label>
+            <input type="password" id="unlock-master-pw" required autofocus>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Unlock</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- User Login Screen -->
+    <div id="login-screen" class="screen auth-screen">
+      <div class="auth-card">
+        <h1>👤 User Login</h1>
+        <p>Sign in to GoldVault Ledger</p>
+        <div id="login-error" class="alert alert-error hidden"></div>
+        <form id="login-form">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="login-username" required autofocus>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="login-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboard-screen" class="screen dashboard">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="logo-text">🏆 GoldVault Ledger</div>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-info">Welcome, <strong id="current-username"></strong> (<span id="current-role"></span>)</span>
+          <button class="btn btn-secondary btn-sm" onclick="app.logout()">🔒 Lock</button>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="card-grid">
+          <div class="card">
+            <h3>Total Smiths</h3>
+            <div class="card-value" id="stat-smiths">0</div>
+          </div>
+          <div class="card">
+            <h3>Total Entries</h3>
+            <div class="card-value" id="stat-entries">0</div>
+          </div>
+          <div class="card">
+            <h3>Pending Requests</h3>
+            <div class="card-value" id="stat-pending">0</div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <button class="btn btn-primary" onclick="app.showAddEntryModal()">➕ Add Entry</button>
+          <button class="btn btn-primary" onclick="app.showScreen('ledger-screen')">📖 View Ledger</button>
+          <button class="btn btn-primary" onclick="app.showScreen('reports-screen')">📊 Reports</button>
+          <button class="btn btn-primary" onclick="app.showScreen('requests-screen')" id="btn-requests">📝 Change Requests</button>
+          <button class="btn btn-primary" onclick="app.showScreen('admin-screen')" id="btn-admin" style="display:none;">⚙️ Admin Panel</button>
+        </div>
+
+        <div class="table-container">
+          <div class="table-header">
+            <h2>Recent Entries</h2>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Smith</th>
+                  <th>Direction</th>
+                  <th>995 Weight (g)</th>
+                  <th>Balance (g)</th>
+                </tr>
+              </thead>
+              <tbody id="recent-entries-tbody">
+                <tr><td colspan="7" class="text-center">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ledger Screen -->
+    <div id="ledger-screen" class="screen dashboard">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="btn btn-secondary btn-sm" onclick="app.showScreen('dashboard-screen')">← Back</button>
+          <div class="logo-text">📖 Smith Ledger</div>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-info" id="ledger-user-info"></span>
+          <button class="btn btn-secondary btn-sm" onclick="app.logout()">🔒 Lock</button>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="filters">
+          <div class="filter-row">
+            <div class="form-group">
+              <label>Smith</label>
+              <select id="filter-smith">
+                <option value="">All Smiths</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date From</label>
+              <input type="date" id="filter-date-from">
+            </div>
+            <div class="form-group">
+              <label>Date To</label>
+              <input type="date" id="filter-date-to">
+            </div>
+            <div class="form-group" style="display:flex;align-items:flex-end;">
+              <button class="btn btn-primary" onclick="app.applyLedgerFilters()">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-header">
+            <h2>Ledger Entries</h2>
+            <button class="btn btn-primary btn-sm" onclick="app.showAddEntryModal()">➕ Add Entry</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Smith</th>
+                  <th>Direction</th>
+                  <th>Raw Weight (g)</th>
+                  <th>Purity</th>
+                  <th>995 Weight (g)</th>
+                  <th>Balance (g)</th>
+                  <th>Entered By</th>
+                  <th>Remarks</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-tbody">
+                <tr><td colspan="12" class="text-center">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <button class="btn btn-secondary btn-sm" id="ledger-prev" onclick="app.loadLedgerPage('prev')">← Previous</button>
+            <span id="ledger-page-info">Page 1</span>
+            <button class="btn btn-secondary btn-sm" id="ledger-next" onclick="app.loadLedgerPage('next')">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Screen -->
+    <div id="reports-screen" class="screen dashboard">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="btn btn-secondary btn-sm" onclick="app.showScreen('dashboard-screen')">← Back</button>
+          <div class="logo-text">📊 Reports</div>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-info" id="reports-user-info"></span>
+          <button class="btn btn-secondary btn-sm" onclick="app.logout()">🔒 Lock</button>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="card">
+          <h3>Generate Report</h3>
+          <form id="report-form">
+            <div class="form-group">
+              <label>Report Type</label>
+              <select id="report-type" onchange="app.updateReportFilters()">
+                <option value="daily">Daily Report</option>
+                <option value="smith_ledger">Smith-wise Ledger</option>
+                <option value="balance">Balance Report</option>
+                <option value="gold_given">Gold Given Report</option>
+                <option value="gold_received">Gold Received Report</option>
+                <option value="user_entry">User-wise Entry Report</option>
+                <option value="audit">Edit/Delete Audit Report</option>
+                <option value="change_request">Change Request Report</option>
+              </select>
+            </div>
+            <div id="report-filters">
+              <!-- Dynamic filters will be inserted here -->
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Report</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Requests Screen -->
+    <div id="requests-screen" class="screen dashboard">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="btn btn-secondary btn-sm" onclick="app.showScreen('dashboard-screen')">← Back</button>
+          <div class="logo-text">📝 Change Requests</div>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-info" id="requests-user-info"></span>
+          <button class="btn btn-secondary btn-sm" onclick="app.logout()">🔒 Lock</button>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="tabs">
+          <button class="tab active" onclick="app.showRequestsTab('pending')">Pending</button>
+          <button class="tab" onclick="app.showRequestsTab('approved')">Approved</button>
+          <button class="tab" onclick="app.showRequestsTab('rejected')">Rejected</button>
+        </div>
+        <div id="requests-content">
+          <!-- Requests will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Panel Screen -->
+    <div id="admin-screen" class="screen dashboard">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="btn btn-secondary btn-sm" onclick="app.showScreen('dashboard-screen')">← Back</button>
+          <div class="logo-text">⚙️ Admin Panel</div>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-info" id="admin-user-info"></span>
+          <button class="btn btn-secondary btn-sm" onclick="app.logout()">🔒 Lock</button>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="tabs">
+          <button class="tab active" onclick="app.showAdminTab('users')">User Management</button>
+          <button class="tab" onclick="app.showAdminTab('smiths')">Smith Management</button>
+          <button class="tab" onclick="app.showAdminTab('clear')">Data Clearing</button>
+          <button class="tab" onclick="app.showAdminTab('backup')">Backup/Restore</button>
+          <button class="tab" onclick="app.showAdminTab('audit')">Audit Log</button>
+        </div>
+        <div id="admin-content">
+          <!-- Admin content will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modals -->
+  
+  <!-- Add Entry Modal -->
+  <div id="add-entry-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>➕ Add New Entry</h2>
+        <button class="modal-close" onclick="app.closeModal('add-entry-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="add-entry-error" class="alert alert-error hidden"></div>
+        <form id="add-entry-form">
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" id="entry-date" required>
+          </div>
+          <div class="form-group">
+            <label>Time *</label>
+            <input type="time" id="entry-time" required>
+          </div>
+          <div class="form-group">
+            <label>Smith *</label>
+            <div style="display:flex;gap:8px;">
+              <select id="entry-smith" required style="flex:1;"></select>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="app.showAddSmithModal()">+ New</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Entry Type *</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="entry-direction" value="Smith to Moozhayil" required>
+                Smith to Moozhayil
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="entry-direction" value="Moozhayil to Smith">
+                Moozhayil to Smith
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weight (grams) *</label>
+            <input type="number" id="entry-weight" step="0.001" min="0.001" required>
+          </div>
+          <div class="form-group">
+            <label>Purity / Touch *</label>
+            <input type="number" id="entry-purity" step="0.1" min="0.1" max="1000" required>
+            <small>Enter as percentage (e.g., 99.5) or fineness (e.g., 995)</small>
+          </div>
+          <div class="form-group">
+            <label>Remarks</label>
+            <textarea id="entry-remarks" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="app.closeModal('add-entry-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="app.submitAddEntry()">Add Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Smith Modal -->
+  <div id="add-smith-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add New Smith</h2>
+        <button class="modal-close" onclick="app.closeModal('add-smith-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="add-smith-error" class="alert alert-error hidden"></div>
+        <div class="form-group">
+          <label>Smith Name *</label>
+          <input type="text" id="new-smith-name" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="app.closeModal('add-smith-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="app.submitAddSmith()">Add Smith</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
