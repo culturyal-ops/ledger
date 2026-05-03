@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GoldVault - Military-grade encrypted gold ledger system for jewelry businesses in Kerala">
+    <meta name="keywords" content="gold ledger, jewelry software, encrypted ledger, Kerala, Moozhayil">
+    <title>GoldVault — Secure Gold Ledger System | REVOLQ Digital Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --blue: #4169E1;
+            --dark-blue: #2C4A9E;
+            --light-blue: #6B8FFF;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #b5b5b5;
+            --light-gray: #333333;
+            --dark-gray: #1a1a1a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --hover-bg: rgba(65, 105, 225, 0.05);
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            padding: 60px 30px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.25) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(65, 105, 225, 0.03) 50%, transparent 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.01) 2px, rgba(255, 255, 255, 0.01) 4px);
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(20px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1100px;
+        }
+
+        .revolq-badge {
+            font-size: 0.65rem;
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeSlideUp 1.2s var(--transition-smooth) 0.3s forwards;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        .revolq-badge::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background: var(--blue);
+            animation: expandWidth 1s var(--transition-smooth) 1.5s forwards;
+            width: 0;
+        }
+
+        @keyframes expandWidth {
+            to {
+                width: 80px;
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(5rem, 15vw, 12rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 50px;
+            letter-spacing: -6px;
+            opacity: 0;
+            animation: fadeSlideUp 1.4s var(--transition-smooth) 0.6s forwards;
+            line-height: 0.85;
+            text-shadow: 0 0 80px rgba(65, 105, 225, 0.3);
+            position: relative;
+        }
+
+        .logo-text::before {
+            content: 'GOLDVAULT';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(65, 105, 225, 0.3);
+            z-index: -1;
+            animation: glitchText 3s ease-in-out infinite;
+        }
+
+        @keyframes glitchText {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(2px, -2px);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-2px, 2px);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(2px, 2px);
+                opacity: 0.5;
+            }
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            margin-bottom: 100px;
+            color: var(--gray);
+            opacity: 0;
+            animation: fadeSlideUp 1.4s var(--transition-smooth) 0.9s forwards;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 24px 80px;
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid var(--white);
+            transition: all 0.5s var(--transition-smooth);
+            opacity: 0;
+            animation: fadeSlideUp 1.4s var(--transition-smooth) 1.2s forwards;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--white);
+            transition: all 0.6s var(--transition-smooth);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--black);
+            border-color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.3);
+        }
+
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--gray);
+            opacity: 0;
+            animation: fadeSlideUp 1.4s var(--transition-smooth) 1.5s forwards, bounce 2.5s ease-in-out 3s infinite;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 1.5rem;
+            display: block;
+            animation: arrowBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(15px);
+            }
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 0.5;
+            }
+        }
+
+        /* ===== SECTION BASE STYLES ===== */
+        section {
+            padding: 160px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s var(--transition-smooth);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-label::before,
+        .section-label::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 1px;
+            background: var(--blue);
+        }
+
+        .section-label::before {
+            right: calc(100% + 20px);
+        }
+
+        .section-label::after {
+            left: calc(100% + 20px);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 7vw, 6.5rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 40px;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--gray);
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        /* ===== WHAT WE DO SECTION ===== */
+        .what-we-do {
+            background: var(--black);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 1px;
+            background: var(--border-color);
+        }
+
+        .service-card {
+            background: var(--black);
+            padding: 80px 60px;
+            transition: all 0.6s var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            transform: translateY(60px);
+            overflow: hidden;
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--light-blue));
+            transition: width 0.8s var(--transition-smooth);
+        }
+
+        .service-card:hover::before {
+            width: 100%;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(65, 105, 225, 0.08) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s var(--transition-smooth);
+            pointer-events: none;
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            background: rgba(65, 105, 225, 0.02);
+            transform: translateY(-8px);
+        }
+
+        .service-number {
+            font-size: 0.8rem;
+            color: var(--blue);
+            font-weight: 700;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--blue);
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .service-card:hover .service-number {
+            background: var(--blue);
+            color: var(--black);
+            transform: translateX(10px);
+        }
+
+        .service-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 30px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .service-desc {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        /* ===== PROBLEM SECTION ===== */
+        .problem-section {
+            background: var(--dark-gray);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            margin-top: 80px;
+        }
+
+        .problem-card {
+            background: var(--black);
+            padding: 60px 45px;
+            border: 1px solid var(--border-color);
+            transition: all 0.5s var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--blue), var(--light-blue));
+            opacity: 0;
+            transition: opacity 0.5s var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .problem-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--blue);
+            box-shadow: 0 30px 60px rgba(65, 105, 225, 0.2);
+        }
+
+        .problem-icon {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+        }
+
+        .problem-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .problem-desc {
+            font-size: 1.05rem;
+            color: var(--gray);
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .problem-cost {
+            font-size: 1.3rem;
+            color: var(--blue);
+            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* ===== WORK SECTION ===== */
+        .work-section {
+            background: var(--black);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .work-grid {
+            margin-top: 100px;
+        }
+
+        .work-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 1s var(--transition-smooth);
+        }
+
+        .work-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-category {
+            font-size: 0.65rem;
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .work-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 50px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .work-desc {
+            font-size: 1.2rem;
+            color: var(--gray);
+            line-height: 2;
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+
+        .work-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s var(--transition-smooth);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:hover {
+            border-color: var(--blue);
+            background: var(--hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 15px;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .work-image {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            transition: all 0.8s var(--transition-smooth);
+            opacity: 0;
+            transform: scale(0.9) rotate(-2deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-image.visible {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .work-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(65, 105, 225, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .work-image:hover {
+            transform: scale(1.05) rotate(1deg);
+            border-color: var(--blue);
+            box-shadow: 0 40px 80px rgba(65, 105, 225, 0.3);
+        }
+
+        /* ===== INVESTMENT SECTION ===== */
+        .investment {
+            background: var(--black);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .investment::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        .price-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--black);
+            border: 2px solid var(--border-color);
+            padding: 100px 80px;
+            transition: all 0.8s var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(80px) scale(0.95);
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, var(--blue), var(--light-blue), var(--blue));
+            background-size: 200% 200%;
+            opacity: 0;
+            transition: opacity 0.6s var(--transition-smooth);
+            z-index: -1;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .price-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 40px 80px rgba(65, 105, 225, 0.25);
+            background: var(--dark-gray);
+        }
+
+        .price-label {
+            font-size: 0.65rem;
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+        .price-amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(5rem, 10vw, 8rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 40px;
+            line-height: 1;
+            letter-spacing: -4px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .price-amount::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blue), transparent);
+            transition: width 1s var(--transition-smooth);
+        }
+
+        .price-card:hover .price-amount::after {
+            width: 100%;
+        }
+
+        .price-desc {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 70px;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 70px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .price-features li {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.1rem;
+            color: var(--gray);
+            transition: all 0.4s var(--transition-smooth);
+            opacity: 0;
+            transform: translateX(-30px);
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .price-features li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .price-features li:hover {
+            color: var(--white);
+            padding-left: 50px;
+            border-color: var(--blue);
+            background: rgba(65, 105, 225, 0.03);
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .price-features li:hover::before {
+            transform: scale(1.3) rotate(360deg);
+        }
+
+        .price-cta {
+            display: inline-block;
+            padding: 24px 80px;
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid var(--white);
+            transition: all 0.5s var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .price-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--white);
+            transition: all 0.6s var(--transition-smooth);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .price-cta:hover {
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .price-cta:hover::before {
+            width: 500px;
+            height: 500px;
+        }
+
+        /* ===== TECH SECTION ===== */
+        .tech-section {
+            background: var(--dark-gray);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1px;
+            background: var(--border-color);
+            margin-top: 80px;
+        }
+
+        .tech-card {
+            background: var(--black);
+            padding: 70px 55px;
+            transition: all 0.6s var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(60px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tech-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blue));
+            transition: width 0.8s var(--transition-smooth);
+        }
+
+        .tech-card:hover::after {
+            width: 100%;
+        }
+
+        .tech-card:hover {
+            background: rgba(65, 105, 225, 0.02);
+            transform: translateY(-8px);
+        }
+
+        .tech-number {
+            font-size: 0.7rem;
+            color: var(--blue);
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 10px 25px;
+            border: 1px solid var(--blue);
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .tech-card:hover .tech-number {
+            background: var(--blue);
+            color: var(--black);
+            transform: translateY(-5px);
+        }
+
+        .tech-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .tech-desc {
+            font-size: 1.05rem;
+            color: var(--gray);
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        /* ===== COMPARISON SECTION ===== */
+        .comparison-section {
+            background: var(--dark-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 160px 40px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+            margin-bottom: 120px;
+        }
+
+        .comparison-card {
+            background: var(--black);
+            border: 2px solid var(--border-color);
+            padding: 50px 40px;
+            transition: all 0.6s var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        .comparison-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .comparison-card-highlight {
+            border-color: var(--blue);
+            position: relative;
+        }
+
+        .comparison-card-highlight::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--blue);
+            color: var(--black);
+            padding: 5px 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(65, 105, 225, 0.2);
+        }
+
+        .comparison-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .comparison-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 300;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .comparison-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--white);
+            margin-top: 20px;
+            line-height: 1.2;
+        }
+
+        .comparison-amc {
+            font-size: 1.1rem;
+            color: #ff6b6b;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .comparison-problems,
+        .comparison-benefits {
+            margin-bottom: 30px;
+        }
+
+        .comparison-problem,
+        .comparison-benefit {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .comparison-problem {
+            color: #ff6b6b;
+        }
+
+        .comparison-benefit {
+            color: #51cf66;
+        }
+
+        .comparison-verdict {
+            font-size: 1.1rem;
+            color: var(--gray);
+            font-weight: 600;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-verdict-highlight {
+            background: rgba(65, 105, 225, 0.1);
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* ROI Section */
+        .roi-section {
+            margin-top: 100px;
+            padding: 80px 60px;
+            background: var(--black);
+            border: 1px solid var(--border-color);
+        }
+
+        .roi-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .roi-card {
+            background: var(--dark-gray);
+            padding: 40px 30px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .roi-card-highlight {
+            border-color: var(--blue);
+            background: rgba(65, 105, 225, 0.05);
+        }
+
+        .roi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.15);
+        }
+
+        .roi-label {
+            font-size: 0.8rem;
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .roi-calc {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .roi-total {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .roi-note {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* Risk Section */
+        .risk-section {
+            margin-top: 100px;
+            padding: 80px 60px;
+            background: rgba(255, 107, 107, 0.05);
+            border: 2px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .risk-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .risk-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--black);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .risk-item:hover {
+            transform: translateY(-5px);
+            border-color: #ff6b6b;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        .risk-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .risk-amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .risk-label {
+            font-size: 1.2rem;
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .risk-desc {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .risk-conclusion {
+            font-size: 1.4rem;
+            color: var(--white);
+            text-align: center;
+            font-weight: 600;
+            padding: 30px;
+            background: var(--black);
+            border: 2px solid var(--blue);
+        }
+
+        /* ===== FINAL CTA SECTION ===== */
+        .final-cta {
+            background: var(--black);
+            padding: 200px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 12s ease-in-out infinite;
+        }
+
+        .final-cta h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 8vw, 7rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 60px;
+            line-height: 1.05;
+            letter-spacing: -3px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 1s var(--transition-smooth);
+        }
+
+        .final-cta h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-cta h2 em {
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        .final-cta p {
+            font-size: 1.4rem;
+            color: var(--gray);
+            margin-bottom: 80px;
+            line-height: 2;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 1s var(--transition-smooth);
+            transition-delay: 0.2s;
+            font-weight: 300;
+        }
+
+        .final-cta p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-cta-button {
+            display: inline-block;
+            padding: 28px 90px;
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid var(--white);
+            transition: all 0.6s var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        .final-cta-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .final-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--white);
+            transition: all 0.7s var(--transition-smooth);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .final-cta-button:hover {
+            color: var(--black);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(255, 255, 255, 0.4);
+        }
+
+        .final-cta-button:hover::before {
+            width: 600px;
+            height: 600px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--black);
+            padding: 100px 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blue), transparent);
+        }
+
+        footer p {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 2;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer a {
+            color: var(--blue);
+            text-decoration: none;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+        }
+
+        footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--blue);
+            transition: width 0.3s var(--transition-smooth);
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1400px) {
+            .hero::before {
+                width: 800px;
+                height: 800px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            section {
+                padding: 120px 30px;
+            }
+            
+            .work-item {
+                gap: 60px;
+            }
+            
+            .investment::before {
+                width: 600px;
+                height: 600px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .revolq-badge {
+                margin-bottom: 50px;
+            }
+
+            .logo-text {
+                margin-bottom: 30px;
+            }
+
+            .tagline {
+                margin-bottom: 60px;
+            }
+
+            .cta-button {
+                padding: 20px 60px;
+                font-size: 0.95rem;
+                letter-spacing: 3px;
+            }
+
+            section {
+                padding: 100px 25px;
+            }
+
+            .section-header {
+                margin-bottom: 80px;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 60px 40px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .work-item {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .work-image {
+                order: -1;
+                aspect-ratio: 16/9;
+            }
+
+            .work-stats {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .price-card {
+                padding: 70px 50px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .final-cta {
+                padding: 120px 25px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                min-height: 90vh;
+            }
+
+            .revolq-badge {
+                font-size: 0.6rem;
+                letter-spacing: 3px;
+                margin-bottom: 40px;
+            }
+
+            .cta-button {
+                padding: 18px 50px;
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+            }
+
+            .scroll-indicator {
+                bottom: 40px;
+                font-size: 0.65rem;
+            }
+
+            section {
+                padding: 80px 20px;
+            }
+
+            .section-header {
+                margin-bottom: 60px;
+            }
+
+            .section-label {
+                font-size: 0.6rem;
+                letter-spacing: 4px;
+            }
+
+            .section-label::before,
+            .section-label::after {
+                width: 40px;
+            }
+
+            .service-card {
+                padding: 50px 30px;
+            }
+
+            .service-number {
+                margin-bottom: 30px;
+            }
+
+            .problem-card {
+                padding: 50px 30px;
+            }
+
+            .problem-icon {
+                font-size: 3rem;
+            }
+
+            .work-category {
+                font-size: 0.6rem;
+            }
+
+            .work-desc {
+                font-size: 1.1rem;
+            }
+
+            .stat-value {
+                font-size: 3.5rem;
+            }
+
+            .work-image {
+                font-size: 5rem;
+            }
+
+            .price-card {
+                padding: 60px 30px;
+            }
+
+            .price-label {
+                font-size: 0.6rem;
+            }
+
+            .price-features li {
+                font-size: 1rem;
+                padding: 18px 0;
+                padding-left: 35px;
+            }
+
+            .price-cta {
+                padding: 20px 60px;
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+            }
+
+            .tech-card {
+                padding: 50px 35px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .roi-section,
+            .risk-section {
+                padding: 60px 30px;
+            }
+
+            .roi-title,
+            .risk-title {
+                font-size: 2.5rem;
+            }
+
+            .final-cta {
+                padding: 100px 20px;
+            }
+
+            .final-cta p {
+                font-size: 1.2rem;
+            }
+
+            .final-cta-button {
+                padding: 22px 60px;
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-button,
+            .price-cta,
+            .final-cta-button {
+                padding: 18px 40px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero {
+                min-height: 85vh;
+            }
+            
+            .section-label::before,
+            .section-label::after {
+                width: 30px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo-text {
+                letter-spacing: -4px;
+            }
+            
+            .cta-button,
+            .price-cta,
+            .final-cta-button {
+                padding: 16px 35px;
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        /* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ===== FOCUS STATES ===== */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: 4px;
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .hero::before,
+            .hero::after,
+            .scroll-indicator {
+                display: none;
+            }
+            
+            section {
+                page-break-inside: avoid;
+            }
+
+            footer {
+                padding: 80px 20px;
+            }
+        }
+
+        /* ===== UTILITY ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--light-gray);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--blue);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="revolq-badge">DIGITAL AGENCY — KERALA, INDIA</div>
+            <h1 class="logo-text">GOLDVAULT</h1>
+            <p class="tagline">
+                Untraceable. Unbreakable. Yours alone.
+            </p>
+            <a href="#investment" class="cta-button">Start a Project →</a>
+        </div>
+        <div class="scroll-indicator">Scroll</div>
+    </div>
+
+    <!-- WHAT WE DO SECTION -->
+    <section class="what-we-do">
+        <div class="section-header">
+            <div class="section-label">WHAT WE DO</div>
+            <h2 class="section-title">Zero Trace. <em>Master-Only Access.</em></h2>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <h3 class="service-title">UNTRACEABLE<br>BY DESIGN</h3>
+                <p class="service-desc">100% offline. No internet. No cloud. No servers. No third parties. Data exists only on your USB. Unplug it, and it's gone. No one can trace what doesn't connect.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <h3 class="service-title">MASTER-ONLY<br>CONTROL</h3>
+                <p class="service-desc">AES-256-GCM military encryption. Only the master password unlocks it. No backdoors. No recovery keys. No "forgot password" option. You control access. Period.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <h3 class="service-title">ZERO DIGITAL<br>FOOTPRINT</h3>
+                <p class="service-desc">In-memory database. No plaintext writes to disk. USB auto-locks on inactivity. Remove the USB, and the system vanishes. Leaves no trace on the computer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section class="problem-section">
+        <div class="section-header">
+            <div class="section-label">THE PROBLEM</div>
+            <h2 class="section-title">The Privacy <em>Problem.</em></h2>
+            <p class="section-subtitle">Cloud software = your data on someone else's server. Excel files = unencrypted and exposed. Paper ledgers = anyone can read them. You need a system that's truly private.</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">☁️</div>
+                <h3 class="problem-title">Cloud = Exposed</h3>
+                <p class="problem-desc">Cloud software stores your data on third-party servers. Hackers, government requests, data breaches. Your sensitive gold transactions visible to strangers.</p>
+                <p class="problem-cost">Risk: Complete privacy loss</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">�</div>
+                <h3 class="problem-title">Excel = Unencrypted</h3>
+                <p class="problem-desc">Excel files sit unencrypted on your computer. Anyone with access can open, copy, or steal your data. No password protection that actually works.</p>
+                <p class="problem-cost">Risk: Data theft & leaks</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📄</div>
+                <h3 class="problem-title">Paper = Readable</h3>
+                <p class="problem-desc">Paper ledgers can be photographed, photocopied, or simply read by anyone who walks past your desk. Zero security. Zero control.</p>
+                <p class="problem-cost">Risk: Competitor intelligence</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">�️</div>
+                <h3 class="problem-title">Employees = Access</h3>
+                <p class="problem-desc">Staff can see everything. Former employees remember everything. No way to restrict access to master-only. Your business secrets aren't secret.</p>
+                <p class="problem-cost">Risk: Internal leaks</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK SECTION -->
+    <section class="work-section">
+        <div class="section-header">
+            <div class="section-label">SELECTED WORK</div>
+            <h2 class="section-title">The work. <em>Built for real businesses.</em></h2>
+        </div>
+        <div class="work-grid">
+            <div class="work-item">
+                <div class="work-content">
+                    <div class="work-category">JEWELRY BUSINESS • PALAI, KERALA</div>
+                    <h3 class="work-title">Moozhayil<br>Gold & Diamonds</h3>
+                    <p class="work-desc">Complete offline encrypted ledger system. Master-only access. Zero internet connection. Zero cloud storage. Zero trace. Built for businesses that value absolute privacy.</p>
+                    <div class="work-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">0%</div>
+                            <div class="stat-label">Internet Required</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">Master Password</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Offline Operation</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Third Parties</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-image">🔐</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INVESTMENT SECTION -->
+    <section class="investment" id="investment">
+        <div class="section-header">
+            <div class="section-label">INVESTMENT</div>
+            <h2 class="section-title">₹75,000 Once. <em>Yours Forever.</em></h2>
+            <p class="section-subtitle">No annual fees. No maintenance contracts. No hidden charges. Just one payment for lifetime ownership.</p>
+        </div>
+        <div class="price-card">
+            <div class="price-label">LIFETIME LICENSE</div>
+            <div class="price-amount">₹75,000</div>
+            <p class="price-desc">One-time payment. Complete ownership. Zero recurring costs. Like buying a physical safe for your showroom—except this one is unbreakable.</p>
+            <ul class="price-features">
+                <li>Lifetime software license (no expiry)</li>
+                <li>Zero annual maintenance fees (₹0/year forever)</li>
+                <li>100% offline operation (no internet dependency)</li>
+                <li>Master-only access (you control everything)</li>
+                <li>AES-256-GCM military encryption</li>
+                <li>USB-based (no installation, no traces)</li>
+                <li>Complete audit trail (encrypted)</li>
+                <li>Remote setup + Malayalam training included</li>
+            </ul>
+            <a href="tel:+919072056478" class="price-cta">Get Started →</a>
+        </div>
+    </section>
+
+    <!-- COMPARISON SECTION -->
+    <section class="comparison-section">
+        <div class="section-header">
+            <div class="section-label">THE ALTERNATIVES</div>
+            <h2 class="section-title">Why pay ₹75,000? <em>Compare the options.</em></h2>
+        </div>
+        <div class="comparison-grid">
+            <div class="comparison-card">
+                <div class="comparison-header">
+                    <h3 class="comparison-title">Generic Accounting<br><span class="comparison-subtitle">(Tally, Standard ERPs)</span></h3>
+                    <div class="comparison-price">₹22,500 - ₹67,500</div>
+                </div>
+                <div class="comparison-problems">
+                    <div class="comparison-problem">❌ No gold-specific calculations</div>
+                    <div class="comparison-problem">❌ No karigar job-work tracking</div>
+                    <div class="comparison-problem">❌ Internet-connected (data leaks)</div>
+                    <div class="comparison-problem">❌ Employees can access/copy data</div>
+                    <div class="comparison-problem">❌ No purity conversion logic</div>
+                </div>
+                <div class="comparison-verdict">Wrong tool for gold business</div>
+            </div>
+
+            <div class="comparison-card">
+                <div class="comparison-header">
+                    <h3 class="comparison-title">Jewelry ERPs<br><span class="comparison-subtitle">(Jwelly, GoldMCX, etc.)</span></h3>
+                    <div class="comparison-price">₹45,000 - ₹1,50,000<br><span class="comparison-amc">+ ₹10,000-₹25,000/year AMC</span></div>
+                </div>
+                <div class="comparison-problems">
+                    <div class="comparison-problem">❌ Complex, heavy training required</div>
+                    <div class="comparison-problem">❌ Annual maintenance contracts (forever)</div>
+                    <div class="comparison-problem">❌ Local servers (employees can access)</div>
+                    <div class="comparison-problem">❌ Data can be copied to external drives</div>
+                    <div class="comparison-problem">❌ Over 5 years: ₹95,000 - ₹2,75,000 total</div>
+                </div>
+                <div class="comparison-verdict">Expensive + Not private</div>
+            </div>
+
+            <div class="comparison-card comparison-card-highlight">
+                <div class="comparison-header">
+                    <h3 class="comparison-title">GoldVault<br><span class="comparison-subtitle">(This System)</span></h3>
+                    <div class="comparison-price">₹75,000<br><span class="comparison-amc">₹0/year forever</span></div>
+                </div>
+                <div class="comparison-benefits">
+                    <div class="comparison-benefit">✓ Gold-specific (995 basis, purity logic)</div>
+                    <div class="comparison-benefit">✓ Zero recurring costs (lifetime license)</div>
+                    <div class="comparison-benefit">✓ 100% offline (untraceable)</div>
+                    <div class="comparison-benefit">✓ Master-only access (no employee leaks)</div>
+                    <div class="comparison-benefit">✓ Over 5 years: ₹75,000 total (saves ₹20K-₹2L)</div>
+                </div>
+                <div class="comparison-verdict comparison-verdict-highlight">Built for privacy + gold business</div>
+            </div>
+        </div>
+
+        <!-- ROI Breakdown -->
+        <div class="roi-section">
+            <h3 class="roi-title">The Real Cost Over 5 Years</h3>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="roi-label">Generic ERP</div>
+                    <div class="roi-calc">₹40,000 + (₹12,000 × 5 years)</div>
+                    <div class="roi-total">= ₹1,00,000</div>
+                    <div class="roi-note">Still no privacy features</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-label">Jewelry ERP</div>
+                    <div class="roi-calc">₹80,000 + (₹18,000 × 5 years)</div>
+                    <div class="roi-total">= ₹1,70,000</div>
+                    <div class="roi-note">Data still accessible to staff</div>
+                </div>
+                <div class="roi-card roi-card-highlight">
+                    <div class="roi-label">GoldVault</div>
+                    <div class="roi-calc">₹75,000 + (₹0 × 5 years)</div>
+                    <div class="roi-total">= ₹75,000</div>
+                    <div class="roi-note">Complete privacy + ownership</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Cost -->
+        <div class="risk-section">
+            <h3 class="risk-title">What's the Cost of a Data Leak?</h3>
+            <div class="risk-grid">
+                <div class="risk-item">
+                    <div class="risk-icon">💰</div>
+                    <div class="risk-amount">₹5,00,000+</div>
+                    <div class="risk-label">Financial Loss</div>
+                    <div class="risk-desc">Competitor intelligence, smith poaching, pricing leaks</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-icon">⚖️</div>
+                    <div class="risk-amount">₹2,00,000+</div>
+                    <div class="risk-label">Legal Costs</div>
+                    <div class="risk-desc">Disputes, investigations, compliance violations</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-icon">📉</div>
+                    <div class="risk-amount">Priceless</div>
+                    <div class="risk-label">Reputation Damage</div>
+                    <div class="risk-desc">Customer trust lost, market position weakened</div>
+                </div>
+            </div>
+            <p class="risk-conclusion">₹75,000 is cheap insurance against a ₹7+ lakh problem.</p>
+        </div>
+    </section>
+
+    <!-- TECH SECTION -->
+    <section class="tech-section">
+        <div class="section-header">
+            <div class="section-label">TECHNICAL SPECS</div>
+            <h2 class="section-title">Engineered for <em>Absolute Privacy.</em></h2>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-number">OFFLINE</div>
+                <h3 class="tech-title">Zero Internet Connection</h3>
+                <p class="tech-desc">Never connects to the internet. No cloud sync. No remote servers. No data transmission. Completely air-gapped operation.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-number">ENCRYPTION</div>
+                <h3 class="tech-title">Military-Grade AES-256</h3>
+                <p class="tech-desc">AES-256-GCM with 600,000 PBKDF2 iterations. Same encryption used by governments and militaries. Unbreakable without master password.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-number">MASTER-ONLY</div>
+                <h3 class="tech-title">Single Password Control</h3>
+                <p class="tech-desc">Only the master password unlocks the system. No backdoors. No recovery options. No "admin access." You control everything.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-number">NO TRACE</div>
+                <h3 class="tech-title">In-Memory Operation</h3>
+                <p class="tech-desc">Database runs in RAM only. No plaintext writes to disk. USB auto-locks after inactivity. Remove USB = system disappears.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-number">PORTABLE</div>
+                <h3 class="tech-title">USB-Only Storage</h3>
+                <p class="tech-desc">Entire system on USB drive. Plug into any Windows PC. No installation. No registry entries. No traces left behind.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-number">PRIVATE</div>
+                <h3 class="tech-title">Zero Third Parties</h3>
+                <p class="tech-desc">No license servers. No activation checks. No telemetry. No analytics. No phone-home. Completely self-contained.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="final-cta">
+        <h2>Your data. <em>Your control.</em></h2>
+        <p>No cloud. No internet. No third parties. No trace.<br>Just you and your master password.</p>
+        <a href="tel:+919072056478" class="final-cta-button">Start a Project →</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">REVOLQ</div>
+        <p>REVOLQ is two people in Kerala who got tired of watching great local businesses go invisible online.</p>
+        <p>We build the digital systems that change that.</p>
+        <p><a href="https://revolq.vercel.app" target="_blank">revolq.vercel.app</a> • Kerala, India • 2025</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.section-header, .service-card, .problem-card, .work-item, .work-image, .stat-item, .price-card, .tech-card, .comparison-card, .final-cta h2, .final-cta p, .final-cta-button').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Price features staggered animation
+        const priceFeatures = document.querySelectorAll('.price-features li');
+        const priceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    priceFeatures.forEach((li, i) => {
+                        setTimeout(() => li.classList.add('visible'), i * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const priceCard = document.querySelector('.price-card');
+        if (priceCard) priceObserver.observe(priceCard);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade scroll indicator on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator && scrolled > 100) {
+                scrollIndicator.style.opacity = Math.max(0, 1 - (scrolled / 300));
+            }
+        });
+    </script>
+
+</body>
+</html>
